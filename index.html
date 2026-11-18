@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects · Dorian Su</title>
+<meta name="description" content="Dorian Su 做的工具与调研：macOS 小工具、浏览器扩展、AI 工作流探索。">
+<style>
+  :root {
+    --bg: #0b0b0d;
+    --panel: #121215;
+    --panel-2: #17171b;
+    --ink: #ececed;
+    --muted: #8a8a92;
+    --faint: #5c5c64;
+    --line: rgba(255,255,255,.08);
+    --accent: #6ee7a8;
+    --maxw: 940px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Segoe UI",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    font-size: 15.5px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- hero ---------- */
+  header { padding: 88px 0 56px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 22px;
+  }
+  .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--accent); border-radius: 2px; }
+  h1 {
+    margin: 0 0 18px; font-size: clamp(36px, 6vw, 58px);
+    line-height: 1.04; letter-spacing: -.03em; font-weight: 700;
+  }
+  h1 .dim { color: var(--faint); }
+  .lede { margin: 0; max-width: 640px; font-size: 17px; color: var(--muted); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 16px; font-size: 13.5px; color: var(--muted);
+    background: var(--panel); transition: color .16s, border-color .16s;
+  }
+  .links a:hover { color: var(--ink); border-color: rgba(255,255,255,.2); }
+  .links a.primary { background: var(--accent); color: #08130d; border-color: var(--accent); font-weight: 600; }
+  .links a.primary:hover { filter: brightness(1.08); }
+
+  /* ---------- section ---------- */
+  section { padding: 44px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
+  .sec-head h2 { margin: 0; font-size: 14px; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); font-weight: 650; }
+  .sec-head .count { font: 500 12px/1 ui-monospace, "SF Mono", Menlo, monospace; color: var(--faint); }
+
+  /* ---------- project card ---------- */
+  .proj {
+    display: block; position: relative;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 26px; margin-bottom: 14px;
+    transition: border-color .18s, background .18s, transform .18s;
+  }
+  .proj:hover { border-color: rgba(110,231,168,.4); background: var(--panel-2); transform: translateY(-1px); }
+  .proj-top { display: flex; align-items: center; gap: 11px; margin-bottom: 9px; }
+  .proj h3 { margin: 0; font-size: 20px; font-weight: 650; letter-spacing: -.012em; }
+  .proj .lang {
+    font: 500 11px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    color: var(--faint); border: 1px solid var(--line);
+    padding: 4px 8px; border-radius: 6px;
+  }
+  .proj .stars { margin-left: auto; font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .proj p { margin: 0 0 14px; color: var(--muted); font-size: 14.5px; }
+  .proj .meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: var(--faint); }
+  .proj .meta b { color: var(--accent); font-weight: 600; }
+  .proj .arrow {
+    position: absolute; top: 26px; right: 26px;
+    color: var(--faint); font-size: 15px; transition: color .18s, transform .18s;
+  }
+  .proj:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+  /* featured variant */
+  .proj.featured { background: linear-gradient(180deg, rgba(110,231,168,.055), transparent 62%), var(--panel); border-color: rgba(110,231,168,.24); }
+  .tag {
+    display: inline-block; padding: 3px 9px; border-radius: 5px;
+    background: rgba(110,231,168,.14); color: var(--accent);
+    font-size: 11px; font-weight: 650; letter-spacing: .03em;
+  }
+
+  /* ---------- footnote ---------- */
+  .note {
+    margin-top: 8px; padding: 18px 22px;
+    border-left: 2px solid rgba(110,231,168,.45);
+    background: rgba(110,231,168,.04);
+    border-radius: 0 10px 10px 0;
+    font-size: 14px; color: var(--muted);
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  footer {
+    padding: 40px 0 64px; border-top: 1px solid var(--line);
+    color: var(--faint); font-size: 12.5px;
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between;
+  }
+
+  @media (max-width: 640px) {
+    header { padding: 56px 0 40px; }
+    .proj { padding: 20px 20px; }
+    .proj .arrow { display: none; }
+    .proj .stars { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Projects</div>
+  <h1>做点<br><span class="dim">真正会用起来的东西</span></h1>
+  <p class="lede">
+    macOS 小工具、浏览器扩展、以及一些关于 AI 如何进入日常开发流程的实验。
+    每个项目都因为我自己遇到了一个问题才存在。
+  </p>
+  <div class="links">
+    <a class="primary" href="https://showyoubug.cn/">读博客 →</a>
+    <a href="https://github.com/doriansu">GitHub</a>
+    <a href="mailto:1614196964@qq.com">Email</a>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head">
+    <h2>工具</h2>
+    <span class="count">03</span>
+  </div>
+
+  <a class="proj featured" href="https://github.com/doriansu/shell-copy">
+    <span class="arrow">↗</span>
+    <div class="proj-top">
+      <h3>Shell Copy</h3>
+      <span class="lang">Swift</span>
+      <span class="tag">macOS App</span>
+    </div>
+    <p>
+      菜单栏小工具，把复制过来时被换行截断的文本重新接回去。
+      终端里复制一段命令、PDF 里复制一段中英文混排，粘出来常常是一堆断行——
+      它在剪贴板层面把它们拼回一句。
+    </p>
+    <div class="meta">
+      <span>原生 AppKit · 离线规则优先</span>
+      <span>★ 2</span>
+      <span>v1.1.0 · 2026-10</span>
+    </div>
+  </a>
+
+  <a class="proj" href="https://github.com/doriansu/lane-guard">
+    <span class="arrow">↗</span>
+    <div class="proj-top">
+      <h3>Lane Guard</h3>
+      <span class="lang">JavaScript</span>
+      <span class="tag">Chrome 扩展</span>
+    </div>
+    <p>
+      AI 浏览器自动化的按标签页环境隔离。人和 agent 共用一个浏览器时，
+      按 HTTP header 选环境的方案会把<em>所有</em>标签页一起改掉；
+      Lane Guard 只重写你显式绑定的那些标签页，其余照常。
+    </p>
+    <div class="meta">
+      <span>Manifest V3 · declarativeNetRequest</span>
+      <span>2026-11</span>
+    </div>
+  </a>
+
+  <a class="proj" href="https://github.com/doriansu/PicBed">
+    <span class="arrow">↗</span>
+    <div class="proj-top">
+      <h3>PicBed</h3>
+      <span class="tag">图床</span>
+    </div>
+    <p>早期用来托管博客图片的仓库。现在还在被一些旧文章引用。</p>
+    <div class="meta">
+      <span>2022-06</span>
+    </div>
+  </a>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>调研 / 实验</h2>
+    <span class="count">01</span>
+  </div>
+
+  <a class="proj" href="https://showyoubug.cn/diagrams/">
+    <span class="arrow">↗</span>
+    <div class="proj-top">
+      <h3>30 个画图工具，各自在画什么</h3>
+      <span class="lang">HTML</span>
+      <span class="tag">在线浏览</span>
+    </div>
+    <p>
+      把 DesignBookmark 上 30 个 diagram / whiteboard 工具按「输入方式 × 自由度」
+      排到一张散点图上，逐个说明它产出什么、长什么样、和邻居差在哪。
+      每个工具配一个本地 demo 页——不用注册、不用试用，打开就能看到它的图是什么质感。
+      其中 Mermaid、Excalidraw、tldraw 三页嵌的是真实开源库，可以直接拖。
+    </p>
+    <div class="meta">
+      <span>30 个工具 · 7 个能力家族 · 3 页可交互</span>
+      <span>2026-11</span>
+    </div>
+  </a>
+</section>
+
+<div class="note">
+  <b>这里只列我自己写的东西。</b>
+  仓库里还有几个 fork（第三方项目的镜像），那不是我写的，所以不放上来。
+</div>
+
+<footer>
+  <span>Dorian Su · 北京</span>
+  <span><a href="https://showyoubug.cn/">辰光恰恰好</a> · <a href="https://github.com/doriansu">GitHub</a></span>
+</footer>
+
+</div>
+</body>
+</html>
