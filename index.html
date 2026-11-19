@@ -3,117 +3,281 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Projects · Dorian Su</title>
-<meta name="description" content="Dorian Su 做的工具与调研：macOS 小工具、浏览器扩展、AI 工作流探索。">
+<title>项目 · Dorian Su</title>
+<meta name="description" content="Dorian Su 做过的工具与调研：macOS 小工具、浏览器扩展、AI 工作流实验。">
+<meta property="og:title" content="项目 · Dorian Su">
+<meta property="og:description" content="Dorian Su 做过的工具与调研：macOS 小工具、浏览器扩展、AI 工作流实验。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f1f1ed" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181a" media="(prefers-color-scheme: dark)">
 <style>
+  /* 与博客（showyoubug.cn）共用一套纸墨：纸、墨、一个深松绿强调色。
+     无圆角、无投影、无渐变；拉丁字符沿用博客自托管的 Archivo，
+     取不到就退回系统无衬线，不影响阅读。 */
+
+  @font-face {
+    font-family: 'Archivo';
+    src: url('fonts/archivo-latin.woff2') format('woff2');
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+      U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
   :root {
-    --bg: #0b0b0d;
-    --panel: #121215;
-    --panel-2: #17171b;
-    --ink: #ececed;
-    --muted: #8a8a92;
-    --faint: #5c5c64;
-    --line: rgba(255,255,255,.08);
-    --accent: #6ee7a8;
-    --maxw: 940px;
+    color-scheme: light dark;
+    --paper: #f1f1ed;
+    --ink: #17191b;
+    --muted: #5f6469;
+    --rule: #dbdbd4;
+    --accent: #1f4d3d;
+    --serif: 'Songti SC', 'Source Han Serif SC', 'Noto Serif SC', 'STSong', serif;
+    --sans: 'Archivo', -apple-system, BlinkMacSystemFont, 'PingFang SC',
+      'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15181a;
+      --ink: #e7e8e4;
+      --muted: #9aa0a3;
+      --rule: #2b3033;
+      --accent: #79bfa0;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-    font-size: 15.5px; line-height: 1.7;
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  a:hover { color: var(--accent); }
 
-  /* ---------- hero ---------- */
-  header { padding: 88px 0 56px; }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 22px;
-  }
-  .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--accent); border-radius: 2px; }
-  h1 {
-    margin: 0 0 18px; font-size: clamp(36px, 6vw, 58px);
-    line-height: 1.04; letter-spacing: -.03em; font-weight: 700;
-  }
-  h1 .dim { color: var(--faint); }
-  .lede { margin: 0; max-width: 640px; font-size: 17px; color: var(--muted); }
-  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
-  .links a {
-    display: inline-flex; align-items: center; gap: 7px;
-    border: 1px solid var(--line); border-radius: 999px;
-    padding: 7px 16px; font-size: 13.5px; color: var(--muted);
-    background: var(--panel); transition: color .16s, border-color .16s;
-  }
-  .links a:hover { color: var(--ink); border-color: rgba(255,255,255,.2); }
-  .links a.primary { background: var(--accent); color: #08130d; border-color: var(--accent); font-weight: 600; }
-  .links a.primary:hover { filter: brightness(1.08); }
-
-  /* ---------- section ---------- */
-  section { padding: 44px 0; border-top: 1px solid var(--line); }
-  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
-  .sec-head h2 { margin: 0; font-size: 14px; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); font-weight: 650; }
-  .sec-head .count { font: 500 12px/1 ui-monospace, "SF Mono", Menlo, monospace; color: var(--faint); }
-
-  /* ---------- project card ---------- */
-  .proj {
-    display: block; position: relative;
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 14px; padding: 24px 26px; margin-bottom: 14px;
-    transition: border-color .18s, background .18s, transform .18s;
-  }
-  .proj:hover { border-color: rgba(110,231,168,.4); background: var(--panel-2); transform: translateY(-1px); }
-  .proj-top { display: flex; align-items: center; gap: 11px; margin-bottom: 9px; }
-  .proj h3 { margin: 0; font-size: 20px; font-weight: 650; letter-spacing: -.012em; }
-  .proj .lang {
-    font: 500 11px/1 ui-monospace, "SF Mono", Menlo, monospace;
-    color: var(--faint); border: 1px solid var(--line);
-    padding: 4px 8px; border-radius: 6px;
-  }
-  .proj .stars { margin-left: auto; font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
-  .proj p { margin: 0 0 14px; color: var(--muted); font-size: 14.5px; }
-  .proj .meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: var(--faint); }
-  .proj .meta b { color: var(--accent); font-weight: 600; }
-  .proj .arrow {
-    position: absolute; top: 26px; right: 26px;
-    color: var(--faint); font-size: 15px; transition: color .18s, transform .18s;
-  }
-  .proj:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
-
-  /* featured variant */
-  .proj.featured { background: linear-gradient(180deg, rgba(110,231,168,.055), transparent 62%), var(--panel); border-color: rgba(110,231,168,.24); }
-  .tag {
-    display: inline-block; padding: 3px 9px; border-radius: 5px;
-    background: rgba(110,231,168,.14); color: var(--accent);
-    font-size: 11px; font-weight: 650; letter-spacing: .03em;
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
-  /* ---------- footnote ---------- */
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- 页头：站名 + 出口 ---------- */
+  .site-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.6rem 0 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: .9rem;
+  }
+
+  .site-head__brand { font-weight: 600; }
+
+  .site-head__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    color: var(--muted);
+  }
+
+  .site-head__nav a:hover { color: var(--accent); }
+
+  /* ---------- 刊头 ---------- */
+  .masthead { padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+
+  .masthead__title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5.6vw, 3.4rem);
+    line-height: 1.15;
+    letter-spacing: .02em;
+    margin: 0 0 1.1rem;
+  }
+
+  .masthead__lede {
+    max-width: 34em;
+    margin: 0 0 .9rem;
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.75;
+  }
+
+  .masthead__count {
+    margin: 0;
+    font-size: .85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- 分组标题 ---------- */
+  .group { padding-top: 2.6rem; }
+
+  .group__head {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    margin: 0 0 .2rem;
+    padding-bottom: .9rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: .95rem;
+    font-weight: 600;
+  }
+
+  .group__count {
+    font-size: .78rem;
+    font-weight: 400;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- 项目行 ---------- */
+  .entry { border-bottom: 1px solid var(--rule); }
+
+  .entry__link {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr) 5.5rem;
+    grid-template-areas:
+      'type title date'
+      'type desc date'
+      'type meta date';
+    column-gap: 2rem;
+    padding: 1.5rem 0;
+    transition: background-color .15s ease;
+  }
+
+  .entry__link:hover { background-color: color-mix(in srgb, var(--ink) 3%, transparent); }
+
+  .entry__type {
+    grid-area: type;
+    font-size: .8rem;
+    color: var(--muted);
+    padding-top: .25rem;
+    transition: color .15s ease;
+  }
+
+  .entry__title {
+    grid-area: title;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.45;
+    transition: color .15s ease;
+  }
+
+  .entry__desc {
+    grid-area: desc;
+    margin: .45rem 0 0;
+    max-width: 46em;
+    font-size: .9rem;
+    line-height: 1.7;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .entry__meta {
+    grid-area: meta;
+    margin: .7rem 0 0;
+    font-size: .78rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .entry__date {
+    grid-area: date;
+    justify-self: end;
+    align-self: start;
+    padding-top: .25rem;
+    font-size: .8rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .entry__link:hover .entry__title,
+  .entry__link:hover .entry__type { color: var(--accent); }
+
+  /* ---------- 说明 ---------- */
   .note {
-    margin-top: 8px; padding: 18px 22px;
-    border-left: 2px solid rgba(110,231,168,.45);
-    background: rgba(110,231,168,.04);
-    border-radius: 0 10px 10px 0;
-    font-size: 14px; color: var(--muted);
+    margin: 3rem 0 0;
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--accent);
+    font-size: .9rem;
+    line-height: 1.7;
+    color: var(--muted);
   }
+
   .note b { color: var(--ink); font-weight: 600; }
 
-  footer {
-    padding: 40px 0 64px; border-top: 1px solid var(--line);
-    color: var(--faint); font-size: 12.5px;
-    display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between;
+  /* ---------- 页脚 ---------- */
+  .site-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .6rem 1.5rem;
+    margin-top: 4rem;
+    padding: 1.5rem 0 4rem;
+    border-top: 1px solid var(--rule);
+    font-size: .8rem;
+    color: var(--muted);
   }
 
-  @media (max-width: 640px) {
-    header { padding: 56px 0 40px; }
-    .proj { padding: 20px 20px; }
-    .proj .arrow { display: none; }
-    .proj .stars { display: none; }
+  .site-foot a:hover { color: var(--accent); }
+
+  /* ---------- 小屏 ---------- */
+  @media (max-width: 767px) {
+    .wrap { padding: 0 20px; }
+
+    .site-head { padding: 1.2rem 0 1rem; }
+
+    .masthead { padding: 2.6rem 0 1.8rem; }
+
+    .entry__link {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'type date'
+        'title title'
+        'desc desc'
+        'meta meta';
+      row-gap: .25rem;
+      column-gap: 1rem;
+      padding: 1.2rem 0;
+    }
+
+    .entry__type,
+    .entry__date { padding-top: 0; }
+
+    .entry__title { margin-top: .2rem; font-size: 1.05rem; }
+
+    .entry__desc { -webkit-line-clamp: 4; }
   }
 </style>
 </head>
@@ -121,110 +285,95 @@
 
 <div class="wrap">
 
-<header>
-  <div class="eyebrow">Projects</div>
-  <h1>做点<br><span class="dim">真正会用起来的东西</span></h1>
-  <p class="lede">
-    macOS 小工具、浏览器扩展、以及一些关于 AI 如何进入日常开发流程的实验。
-    每个项目都因为我自己遇到了一个问题才存在。
-  </p>
-  <div class="links">
-    <a class="primary" href="https://showyoubug.cn/">读博客 →</a>
+<header class="site-head">
+  <a class="site-head__brand" href="https://showyoubug.cn/">Dorian Su</a>
+  <nav class="site-head__nav" aria-label="站外链接">
+    <a href="https://showyoubug.cn/">博客</a>
     <a href="https://github.com/doriansu">GitHub</a>
     <a href="mailto:1614196964@qq.com">Email</a>
-  </div>
+  </nav>
 </header>
 
-<section>
-  <div class="sec-head">
-    <h2>工具</h2>
-    <span class="count">03</span>
-  </div>
-
-  <a class="proj featured" href="https://github.com/doriansu/shell-copy">
-    <span class="arrow">↗</span>
-    <div class="proj-top">
-      <h3>Shell Copy</h3>
-      <span class="lang">Swift</span>
-      <span class="tag">macOS App</span>
-    </div>
-    <p>
-      菜单栏小工具，把复制过来时被换行截断的文本重新接回去。
-      终端里复制一段命令、PDF 里复制一段中英文混排，粘出来常常是一堆断行——
-      它在剪贴板层面把它们拼回一句。
-    </p>
-    <div class="meta">
-      <span>原生 AppKit · 离线规则优先</span>
-      <span>★ 2</span>
-      <span>v1.1.0 · 2026-10</span>
-    </div>
-  </a>
-
-  <a class="proj" href="https://github.com/doriansu/lane-guard">
-    <span class="arrow">↗</span>
-    <div class="proj-top">
-      <h3>Lane Guard</h3>
-      <span class="lang">JavaScript</span>
-      <span class="tag">Chrome 扩展</span>
-    </div>
-    <p>
-      AI 浏览器自动化的按标签页环境隔离。人和 agent 共用一个浏览器时，
-      按 HTTP header 选环境的方案会把<em>所有</em>标签页一起改掉；
-      Lane Guard 只重写你显式绑定的那些标签页，其余照常。
-    </p>
-    <div class="meta">
-      <span>Manifest V3 · declarativeNetRequest</span>
-      <span>2026-11</span>
-    </div>
-  </a>
-
-  <a class="proj" href="https://github.com/doriansu/PicBed">
-    <span class="arrow">↗</span>
-    <div class="proj-top">
-      <h3>PicBed</h3>
-      <span class="tag">图床</span>
-    </div>
-    <p>早期用来托管博客图片的仓库。现在还在被一些旧文章引用。</p>
-    <div class="meta">
-      <span>2022-06</span>
-    </div>
-  </a>
-</section>
-
-<section>
-  <div class="sec-head">
-    <h2>调研 / 实验</h2>
-    <span class="count">01</span>
-  </div>
-
-  <a class="proj" href="https://showyoubug.cn/diagrams/">
-    <span class="arrow">↗</span>
-    <div class="proj-top">
-      <h3>30 个画图工具，各自在画什么</h3>
-      <span class="lang">HTML</span>
-      <span class="tag">在线浏览</span>
-    </div>
-    <p>
-      把 DesignBookmark 上 30 个 diagram / whiteboard 工具按「输入方式 × 自由度」
-      排到一张散点图上，逐个说明它产出什么、长什么样、和邻居差在哪。
-      每个工具配一个本地 demo 页——不用注册、不用试用，打开就能看到它的图是什么质感。
-      其中 Mermaid、Excalidraw、tldraw 三页嵌的是真实开源库，可以直接拖。
-    </p>
-    <div class="meta">
-      <span>30 个工具 · 7 个能力家族 · 3 页可交互</span>
-      <span>2026-11</span>
-    </div>
-  </a>
-</section>
-
-<div class="note">
-  <b>这里只列我自己写的东西。</b>
-  仓库里还有几个 fork（第三方项目的镜像），那不是我写的，所以不放上来。
+<div class="masthead">
+  <h1 class="masthead__title">自己先用起来的东西</h1>
+  <p class="masthead__lede">
+    每个项目都从我自己遇到的一个问题开始：剪贴板里被换行截断的命令、
+    人和 agent 共用一个浏览器时的环境串味、博客图片没地方放。
+  </p>
+  <p class="masthead__count">4 个项目 · 2022—2026</p>
 </div>
 
-<footer>
+<section class="group" aria-labelledby="group-tools">
+  <h2 class="group__head" id="group-tools">工具<span class="group__count">3</span></h2>
+
+  <article class="entry">
+    <a class="entry__link" href="https://github.com/doriansu/shell-copy">
+      <span class="entry__type">macOS App</span>
+      <h3 class="entry__title">Shell Copy</h3>
+      <p class="entry__desc">
+        菜单栏小工具，把复制过来时被换行截断的文本重新接回去。终端里复制一段命令、
+        PDF 里复制中英文混排，粘出来常常是一堆断行——它在剪贴板层面把它们拼回一句。
+      </p>
+      <p class="entry__meta">Swift · 原生 AppKit · 离线规则优先 · ★ 2</p>
+      <time class="entry__date" datetime="2026-10">2026.10</time>
+    </a>
+  </article>
+
+  <article class="entry">
+    <a class="entry__link" href="https://github.com/doriansu/lane-guard">
+      <span class="entry__type">Chrome 扩展</span>
+      <h3 class="entry__title">Lane Guard</h3>
+      <p class="entry__desc">
+        AI 浏览器自动化的按标签页环境隔离。人和 agent 共用一个浏览器时，
+        按 HTTP header 选环境的方案会把所有标签页一起改掉；Lane Guard 只重写你显式绑定的那些，其余照常。
+      </p>
+      <p class="entry__meta">JavaScript · Manifest V3 · declarativeNetRequest</p>
+      <time class="entry__date" datetime="2026-11">2026.11</time>
+    </a>
+  </article>
+
+  <article class="entry">
+    <a class="entry__link" href="https://github.com/doriansu/PicBed">
+      <span class="entry__type">图床</span>
+      <h3 class="entry__title">PicBed</h3>
+      <p class="entry__desc">
+        早期用来托管博客图片的仓库。现在还有一些旧文章在引用它。
+      </p>
+      <p class="entry__meta">Git 仓库 · 静态资源</p>
+      <time class="entry__date" datetime="2022-06">2022.06</time>
+    </a>
+  </article>
+</section>
+
+<section class="group" aria-labelledby="group-research">
+  <h2 class="group__head" id="group-research">调研<span class="group__count">1</span></h2>
+
+  <article class="entry">
+    <a class="entry__link" href="https://showyoubug.cn/diagrams/">
+      <span class="entry__type">在线浏览</span>
+      <h3 class="entry__title">30 个画图工具，各自在画什么</h3>
+      <p class="entry__desc">
+        把 DesignBookmark 上 30 个 diagram / whiteboard 工具按「输入方式 × 自由度」排到一张散点图上，
+        逐个说明它产出什么、和邻居差在哪。每个工具配一个本地 demo 页，打开就能看到它的图是什么质感；
+        其中 Mermaid、Excalidraw、tldraw 三页嵌的是真实开源库，可以直接拖。
+      </p>
+      <p class="entry__meta">30 个工具 · 7 个能力家族 · 3 页可交互</p>
+      <time class="entry__date" datetime="2026-11">2026.11</time>
+    </a>
+  </article>
+</section>
+
+<p class="note">
+  <b>这里只列我自己写的东西。</b>
+  仓库里还有几个 fork（第三方项目的镜像），那不是我写的，所以不放上来。
+</p>
+
+<footer class="site-foot">
   <span>Dorian Su · 北京</span>
-  <span><a href="https://showyoubug.cn/">辰光恰恰好</a> · <a href="https://github.com/doriansu">GitHub</a></span>
+  <span>
+    <a href="https://showyoubug.cn/">辰光恰恰好</a> ·
+    <a href="https://github.com/doriansu">GitHub</a>
+  </span>
 </footer>
 
 </div>
