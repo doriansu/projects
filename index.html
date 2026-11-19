@@ -11,9 +11,9 @@
 <meta name="theme-color" content="#f1f1ed" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#15181a" media="(prefers-color-scheme: dark)">
 <style>
-  /* 与博客（showyoubug.cn）共用一套纸墨：纸、墨、一个深松绿强调色。
-     无圆角、无投影、无渐变；拉丁字符沿用博客自托管的 Archivo，
-     取不到就退回系统无衬线，不影响阅读。 */
+  /* 与博客同一套材料：纸、墨、一个深松绿。
+     但尺度不同——博客是索引（多、密、小），这里是作品（少、疏、大）。
+     全页只有一个高音：第一个项目整块反色，其余保持安静。 */
 
   @font-face {
     font-family: 'Archivo';
@@ -36,6 +36,7 @@
     --serif: 'Songti SC', 'Source Han Serif SC', 'Noto Serif SC', 'STSong', serif;
     --sans: 'Archivo', -apple-system, BlinkMacSystemFont, 'PingFang SC',
       'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+    --maxw: 1080px;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -65,10 +66,9 @@
   a { color: inherit; text-decoration: none; }
   a:hover { color: var(--accent); }
 
-  a:focus-visible,
-  button:focus-visible {
+  a:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 3px;
+    outline-offset: 4px;
   }
 
   ::selection { background: var(--accent); color: var(--paper); }
@@ -82,19 +82,18 @@
   }
 
   .wrap {
-    max-width: 960px;
+    max-width: var(--maxw);
     margin: 0 auto;
-    padding: 0 28px;
+    padding: 0 32px;
   }
 
-  /* ---------- 页头：站名 + 出口 ---------- */
+  /* ---------- 页头 ---------- */
   .site-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
     padding: 1.6rem 0 1.2rem;
-    border-bottom: 1px solid var(--rule);
     font-size: .9rem;
   }
 
@@ -103,139 +102,180 @@
   .site-head__nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.4rem;
+    gap: 1.5rem;
     color: var(--muted);
   }
 
   .site-head__nav a:hover { color: var(--accent); }
 
-  /* ---------- 刊头 ---------- */
-  .masthead { padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+  /* ---------- 刊头：整页最大的一句 ---------- */
+  .masthead { padding: 5.5rem 0 4.5rem; }
 
   .masthead__title {
     font-family: var(--serif);
     font-weight: 600;
-    font-size: clamp(2.1rem, 5.6vw, 3.4rem);
-    line-height: 1.15;
-    letter-spacing: .02em;
-    margin: 0 0 1.1rem;
+    font-size: clamp(2.6rem, 9.2vw, 6.6rem);
+    line-height: 1.04;
+    letter-spacing: .015em;
+    margin: 0 0 2.6rem;
+    text-wrap: balance;
+  }
+
+  .masthead__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem 3rem;
+    padding-top: 1.3rem;
+    border-top: 1px solid var(--rule);
+    font-size: .85rem;
+    color: var(--muted);
   }
 
   .masthead__lede {
-    max-width: 34em;
-    margin: 0 0 .9rem;
-    font-size: clamp(1rem, 2.2vw, 1.1rem);
-    line-height: 1.75;
+    margin: 0;
+    max-width: 36em;
+    line-height: 1.8;
   }
 
   .masthead__count {
     margin: 0;
-    font-size: .85rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ---------- 分组标题 ---------- */
-  .group { padding-top: 2.6rem; }
-
-  .group__head {
-    display: flex;
-    align-items: baseline;
-    gap: .6rem;
-    margin: 0 0 .2rem;
-    padding-bottom: .9rem;
-    border-bottom: 1px solid var(--rule);
-    font-size: .95rem;
-    font-weight: 600;
-  }
-
-  .group__count {
-    font-size: .78rem;
-    font-weight: 400;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ---------- 项目行 ---------- */
-  .entry { border-bottom: 1px solid var(--rule); }
-
-  .entry__link {
-    display: grid;
-    grid-template-columns: 7rem minmax(0, 1fr) 5.5rem;
-    grid-template-areas:
-      'type title date'
-      'type desc date'
-      'type meta date';
-    column-gap: 2rem;
-    padding: 1.5rem 0;
-    transition: background-color .15s ease;
-  }
-
-  .entry__link:hover { background-color: color-mix(in srgb, var(--ink) 3%, transparent); }
-
-  .entry__type {
-    grid-area: type;
-    font-size: .8rem;
-    color: var(--muted);
-    padding-top: .25rem;
-    transition: color .15s ease;
-  }
-
-  .entry__title {
-    grid-area: title;
-    margin: 0;
-    font-size: 1.15rem;
-    font-weight: 600;
-    line-height: 1.45;
-    transition: color .15s ease;
-  }
-
-  .entry__desc {
-    grid-area: desc;
-    margin: .45rem 0 0;
-    max-width: 46em;
-    font-size: .9rem;
-    line-height: 1.7;
-    color: var(--muted);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
-
-  .entry__meta {
-    grid-area: meta;
-    margin: .7rem 0 0;
-    font-size: .78rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .entry__date {
-    grid-area: date;
-    justify-self: end;
-    align-self: start;
-    padding-top: .25rem;
-    font-size: .8rem;
-    color: var(--muted);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
 
-  .entry__link:hover .entry__title,
-  .entry__link:hover .entry__type { color: var(--accent); }
-
-  /* ---------- 说明 ---------- */
-  .note {
-    margin: 3rem 0 0;
-    padding-left: 1.1rem;
-    border-left: 2px solid var(--accent);
-    font-size: .9rem;
-    line-height: 1.7;
+  /* ---------- 分组 ---------- */
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    gap: .7rem;
+    margin: 0;
+    padding-bottom: 1rem;
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .16em;
     color: var(--muted);
   }
 
-  .note b { color: var(--ink); font-weight: 600; }
+  .group-head span {
+    font-weight: 400;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- 作品：左轴标签 + 主体 ---------- */
+  .work {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    column-gap: 2.5rem;
+    padding: 3.4rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .work__rail {
+    writing-mode: vertical-rl;
+    font-size: .72rem;
+    letter-spacing: .2em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    transition: color .18s ease;
+  }
+
+  .work__title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 4.6vw, 3.2rem);
+    line-height: 1.12;
+    letter-spacing: .01em;
+    margin: 0 0 1.1rem;
+    transition: color .18s ease;
+  }
+
+  .work__desc {
+    margin: 0;
+    max-width: 32em;
+    font-size: .98rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .work__meta {
+    margin: 1.4rem 0 0;
+    font-size: .78rem;
+    letter-spacing: .02em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  a.work:hover .work__title,
+  a.work:hover .work__rail { color: var(--accent); }
+
+  /* ---------- 高音：第一个项目整块反色 ---------- */
+  .showcase {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4.5rem 0 4rem;
+  }
+
+  .showcase .wrap { display: block; }
+
+  .showcase__eyebrow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+    font-size: .74rem;
+    letter-spacing: .2em;
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+  }
+
+  .showcase__title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.8rem, 10vw, 7.2rem);
+    line-height: .98;
+    letter-spacing: .015em;
+    margin: 2.4rem 0 1.8rem;
+    transition: color .18s ease;
+  }
+
+  .showcase__desc {
+    margin: 0;
+    max-width: 30em;
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: color-mix(in srgb, var(--paper) 74%, transparent);
+  }
+
+  .showcase__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 2rem;
+    margin: 2.4rem 0 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+    font-size: .78rem;
+    letter-spacing: .02em;
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .showcase a:focus-visible { outline-color: currentColor; }
+
+  a.showcase__link:hover .showcase__title { color: #79bfa0; }
+
+  @media (prefers-color-scheme: dark) {
+    .showcase { background: #e7e8e4; color: #15181a; }
+    .showcase__desc { color: color-mix(in srgb, #15181a 76%, transparent); }
+    .showcase__eyebrow,
+    .showcase__meta { color: color-mix(in srgb, #15181a 58%, transparent); }
+    .showcase__eyebrow,
+    .showcase__meta { border-color: color-mix(in srgb, #15181a 20%, transparent); }
+    a.showcase__link:hover .showcase__title { color: #1f4d3d; }
+  }
 
   /* ---------- 页脚 ---------- */
   .site-foot {
@@ -243,8 +283,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: .6rem 1.5rem;
-    margin-top: 4rem;
-    padding: 1.5rem 0 4rem;
+    margin-top: 5rem;
+    padding: 1.6rem 0 5rem;
     border-top: 1px solid var(--rule);
     font-size: .8rem;
     color: var(--muted);
@@ -258,123 +298,129 @@
 
     .site-head { padding: 1.2rem 0 1rem; }
 
-    .masthead { padding: 2.6rem 0 1.8rem; }
+    .masthead { padding: 3rem 0 2.6rem; }
 
-    .entry__link {
-      grid-template-columns: minmax(0, 1fr) auto;
-      grid-template-areas:
-        'type date'
-        'title title'
-        'desc desc'
-        'meta meta';
-      row-gap: .25rem;
-      column-gap: 1rem;
-      padding: 1.2rem 0;
+    .masthead__title { margin-bottom: 1.6rem; }
+
+    .masthead__foot { flex-direction: column; gap: .5rem; }
+
+    .work {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: .9rem;
+      padding: 2.4rem 0;
     }
 
-    .entry__type,
-    .entry__date { padding-top: 0; }
+    .work__rail {
+      writing-mode: horizontal-tb;
+      letter-spacing: .12em;
+    }
 
-    .entry__title { margin-top: .2rem; font-size: 1.05rem; }
+    .work__title { margin-bottom: .8rem; }
 
-    .entry__desc { -webkit-line-clamp: 4; }
+    .showcase { padding: 3rem 0 2.6rem; }
+
+    .showcase__title { margin: 1.8rem 0 1.4rem; }
+
+    .showcase__desc { font-size: .98rem; }
+
+    .site-foot { margin-top: 3rem; padding-bottom: 3.5rem; }
   }
 </style>
 </head>
 <body>
 
 <div class="wrap">
+  <header class="site-head">
+    <a class="site-head__brand" href="https://showyoubug.cn/">Dorian Su</a>
+    <nav class="site-head__nav" aria-label="站外链接">
+      <a href="https://showyoubug.cn/">博客</a>
+      <a href="https://github.com/doriansu">GitHub</a>
+      <a href="mailto:1614196964@qq.com">Email</a>
+    </nav>
+  </header>
 
-<header class="site-head">
-  <a class="site-head__brand" href="https://showyoubug.cn/">Dorian Su</a>
-  <nav class="site-head__nav" aria-label="站外链接">
-    <a href="https://showyoubug.cn/">博客</a>
-    <a href="https://github.com/doriansu">GitHub</a>
-    <a href="mailto:1614196964@qq.com">Email</a>
-  </nav>
-</header>
-
-<div class="masthead">
-  <h1 class="masthead__title">自己先用起来的东西</h1>
-  <p class="masthead__lede">
-    每个项目都从我自己遇到的一个问题开始：剪贴板里被换行截断的命令、
-    人和 agent 共用一个浏览器时的环境串味、博客图片没地方放。
-  </p>
-  <p class="masthead__count">4 个项目 · 2022—2026</p>
+  <div class="masthead">
+    <h1 class="masthead__title">自己先用起来的东西</h1>
+    <div class="masthead__foot">
+      <p class="masthead__lede">
+        每个项目都从我自己遇到的一个问题开始：剪贴板里被换行截断的命令、
+        人和 agent 共用一个浏览器时的环境串味、博客图片没地方放。
+      </p>
+      <p class="masthead__count">4 个项目 · 2022—2026</p>
+    </div>
+  </div>
 </div>
 
-<section class="group" aria-labelledby="group-tools">
-  <h2 class="group__head" id="group-tools">工具<span class="group__count">3</span></h2>
+<p class="group-head wrap" aria-hidden="true">工具 <span>3</span></p>
 
-  <article class="entry">
-    <a class="entry__link" href="https://github.com/doriansu/shell-copy">
-      <span class="entry__type">macOS App</span>
-      <h3 class="entry__title">Shell Copy</h3>
-      <p class="entry__desc">
+<section class="showcase" aria-labelledby="work-shell-copy">
+  <div class="wrap">
+    <a class="showcase__link" href="https://github.com/doriansu/shell-copy">
+      <div class="showcase__eyebrow">
+        <span>macOS App</span>
+        <span>2026.10</span>
+      </div>
+      <h2 class="showcase__title" id="work-shell-copy">Shell Copy</h2>
+      <p class="showcase__desc">
         菜单栏小工具，把复制过来时被换行截断的文本重新接回去。终端里复制一段命令、
         PDF 里复制中英文混排，粘出来常常是一堆断行——它在剪贴板层面把它们拼回一句。
       </p>
-      <p class="entry__meta">Swift · 原生 AppKit · 离线规则优先 · ★ 2</p>
-      <time class="entry__date" datetime="2026-10">2026.10</time>
+      <p class="showcase__meta">
+        <span>Swift · 原生 AppKit</span>
+        <span>离线规则优先</span>
+        <span>★ 2</span>
+      </p>
     </a>
-  </article>
+  </div>
+</section>
 
-  <article class="entry">
-    <a class="entry__link" href="https://github.com/doriansu/lane-guard">
-      <span class="entry__type">Chrome 扩展</span>
-      <h3 class="entry__title">Lane Guard</h3>
-      <p class="entry__desc">
+<div class="wrap">
+
+  <a class="work" href="https://github.com/doriansu/lane-guard">
+    <span class="work__rail">Chrome 扩展 · 2026.11</span>
+    <div>
+      <h2 class="work__title">Lane Guard</h2>
+      <p class="work__desc">
         AI 浏览器自动化的按标签页环境隔离。人和 agent 共用一个浏览器时，
         按 HTTP header 选环境的方案会把所有标签页一起改掉；Lane Guard 只重写你显式绑定的那些，其余照常。
       </p>
-      <p class="entry__meta">JavaScript · Manifest V3 · declarativeNetRequest</p>
-      <time class="entry__date" datetime="2026-11">2026.11</time>
-    </a>
-  </article>
+      <p class="work__meta">JavaScript · Manifest V3 · declarativeNetRequest</p>
+    </div>
+  </a>
 
-  <article class="entry">
-    <a class="entry__link" href="https://github.com/doriansu/PicBed">
-      <span class="entry__type">图床</span>
-      <h3 class="entry__title">PicBed</h3>
-      <p class="entry__desc">
+  <a class="work" href="https://github.com/doriansu/PicBed">
+    <span class="work__rail">图床 · 2022.06</span>
+    <div>
+      <h2 class="work__title">PicBed</h2>
+      <p class="work__desc">
         早期用来托管博客图片的仓库。现在还有一些旧文章在引用它。
       </p>
-      <p class="entry__meta">Git 仓库 · 静态资源</p>
-      <time class="entry__date" datetime="2022-06">2022.06</time>
-    </a>
-  </article>
-</section>
+      <p class="work__meta">Git 仓库 · 静态资源</p>
+    </div>
+  </a>
 
-<section class="group" aria-labelledby="group-research">
-  <h2 class="group__head" id="group-research">调研<span class="group__count">1</span></h2>
+  <p class="group-head" style="margin-top:4.5rem" aria-hidden="true">调研 <span>1</span></p>
 
-  <article class="entry">
-    <a class="entry__link" href="https://showyoubug.cn/diagrams/">
-      <span class="entry__type">在线浏览</span>
-      <h3 class="entry__title">30 个画图工具，各自在画什么</h3>
-      <p class="entry__desc">
+  <a class="work" href="https://showyoubug.cn/diagrams/">
+    <span class="work__rail">在线浏览 · 2026.11</span>
+    <div>
+      <h2 class="work__title">30 个画图工具，<br>各自在画什么</h2>
+      <p class="work__desc">
         把 DesignBookmark 上 30 个 diagram / whiteboard 工具按「输入方式 × 自由度」排到一张散点图上，
         逐个说明它产出什么、和邻居差在哪。每个工具配一个本地 demo 页，打开就能看到它的图是什么质感；
         其中 Mermaid、Excalidraw、tldraw 三页嵌的是真实开源库，可以直接拖。
       </p>
-      <p class="entry__meta">30 个工具 · 7 个能力家族 · 3 页可交互</p>
-      <time class="entry__date" datetime="2026-11">2026.11</time>
-    </a>
-  </article>
-</section>
+      <p class="work__meta">30 个工具 · 7 个能力家族 · 3 页可交互</p>
+    </div>
+  </a>
 
-<p class="note">
-  <b>这里只列我自己写的东西。</b>
-  仓库里还有几个 fork（第三方项目的镜像），那不是我写的，所以不放上来。
-</p>
-
-<footer class="site-foot">
-  <span>Dorian Su · 北京</span>
-  <span>
-    <a href="https://showyoubug.cn/">辰光恰恰好</a> ·
-    <a href="https://github.com/doriansu">GitHub</a>
-  </span>
-</footer>
+  <footer class="site-foot">
+    <span>Dorian Su · 北京</span>
+    <span>
+      <a href="https://showyoubug.cn/">辰光恰恰好</a> ·
+      <a href="https://github.com/doriansu">GitHub</a>
+    </span>
+  </footer>
 
 </div>
 </body>
